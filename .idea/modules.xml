@@ -6,6 +6,11 @@
       <module fileurl="file://$PROJECT_DIR$/gulimall.iml" filepath="$PROJECT_DIR$/gulimall.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" filepath="$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-core/gulimall-core.iml" filepath="$PROJECT_DIR$/gulimall-core/gulimall-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-oms/gulimall-oms.iml" filepath="$PROJECT_DIR$/gulimall-oms/gulimall-oms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-pms/gulimall-pms.iml" filepath="$PROJECT_DIR$/gulimall-pms/gulimall-pms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-sms/gulimall-sms.iml" filepath="$PROJECT_DIR$/gulimall-sms/gulimall-sms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-ums/gulimall-ums.iml" filepath="$PROJECT_DIR$/gulimall-ums/gulimall-ums.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-wms/gulimall-wms.iml" filepath="$PROJECT_DIR$/gulimall-wms/gulimall-wms.iml" />
     </modules>
   </component>
 </project>
