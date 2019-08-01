@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/guli-generator/guli-generator.iml" filepath="$PROJECT_DIR$/guli-generator/guli-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall.iml" filepath="$PROJECT_DIR$/gulimall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" filepath="$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-core/gulimall-core.iml" filepath="$PROJECT_DIR$/gulimall-core/gulimall-core.iml" />
+    </modules>
+  </component>
+</project>
