@@ -11,7 +11,7 @@ package com.atguigu.gulimall.commons.bean;
 import com.atguigu.gulimall.commons.utils.SQLFilter;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 

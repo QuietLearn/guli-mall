@@ -15,6 +15,16 @@ public class PmsSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/**").permitAll();
 
         //csrf功能一定先干掉...
+        /**
+         * 	跨站请求伪造； 害怕别人给你发起的请求少带令牌
+         * 		post(form表单)提交的时候都必须带一个_csrf令牌。
+         * 	做这个全系统的表单都得加
+         *
+         * 	说白了就是(身份)认证，认证的身份才能够访问springsecurity控制的API接口，防止黑客恶意攻击
+         */
+        //防重复提交
+        //springsecurity认为所有的post请求都要防重复提交，都要带令牌
+
         http.csrf().disable();
     }
 
