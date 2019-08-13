@@ -9,6 +9,9 @@
         <option value="$PROJECT_DIR$/gulimall-oms/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-sms/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-ums/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/es-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/gulimall-search/pom.xml" />
       </list>
     </option>
   </component>

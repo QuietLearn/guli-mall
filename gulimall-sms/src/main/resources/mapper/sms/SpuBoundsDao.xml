@@ -10,7 +10,15 @@
         <result property="growBounds" column="grow_bounds"/>
         <result property="buyBounds" column="buy_bounds"/>
         <result property="work" column="work"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
-
+    <sql id="Base_Column_List" >
+        id,
+        spu_id,
+        grow_bounds,
+        buy_bounds,
+        work,
+  </sql>
 
 </mapper>

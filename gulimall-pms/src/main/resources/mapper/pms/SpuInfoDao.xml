@@ -11,8 +11,10 @@
         <result property="catalogId" column="catalog_id"/>
         <result property="brandId" column="brand_id"/>
         <result property="publishStatus" column="publish_status"/>
-        <result property="createTime" column="create_time"/>
-        <result property="uodateTime" column="uodate_time"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
 

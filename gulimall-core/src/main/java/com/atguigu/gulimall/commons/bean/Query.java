@@ -27,7 +27,9 @@ public class Query<T> {
         return this.getPage(params, null, false);
     }
 
-
+    public IPage<T> getPage(QueryCondition params,String defaultOrderField) {
+        return this.getPage(params, defaultOrderField, false);
+    }
 
     public IPage<T> getPage(QueryCondition params, String defaultOrderField, boolean isAsc) {
         //分页参数
@@ -62,11 +64,14 @@ public class Query<T> {
         }
 
         //默认排序
-        if(isAsc) {
-            page.setAsc(defaultOrderField);
-        }else {
-            page.setDesc(defaultOrderField);
+        if (StringUtils.isNotBlank(defaultOrderField)){
+            if(isAsc) {
+                page.setAsc(defaultOrderField);
+            }else {
+                page.setDesc(defaultOrderField);
+            }
         }
+
 
         return page;
     }

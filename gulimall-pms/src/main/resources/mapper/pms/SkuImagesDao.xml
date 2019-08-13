@@ -10,7 +10,22 @@
         <result property="imgUrl" column="img_url"/>
         <result property="imgSort" column="img_sort"/>
         <result property="defaultImg" column="default_img"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
+    <!--  void insertBatch(@Param("baseAttrs")List<ProductAttrValueEntity> allSave);-->
+    <insert id="insertBatch" >
+        INSERT INTO `pms_sku_images`
+        (sku_id,img_url,img_sort,default_img,gmt_create,gmt_modified)
+        VALUES
+        <foreach collection="skuImagesList" item="skuImage" separator=",">
+            (
+            #{skuImage.skuId},#{skuImage.imgUrl},#{skuImage.imgSort},
+            #{skuImage.defaultImg},
+            #{skuImage.gmtCreate},#{skuImage.gmtModified}
+            )
+        </foreach>
 
+    </insert>
 </mapper>

@@ -7,6 +7,8 @@
     <resultMap type="com.atguigu.gulimall.pms.entity.SpuInfoDescEntity" id="spuInfoDescMap">
         <result property="spuId" column="spu_id"/>
         <result property="decript" column="decript"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
 

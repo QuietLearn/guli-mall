@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: pms_route
+          uri: lb://gulimall-pms
+          predicates:
+            - Path=/pms/**, /index/**
+
+        - id: oms_route
+          uri: lb://gulimall-oms
+          predicates:
+            - Path=/oms/**
+         # filters:
+           # - AddResponseHeader=heyijie,666
+        - id: sms_route
+          uri: lb://gulimall-sms
+          predicates:
+            - Path=/sms/**
+        - id: ums_route
+          uri: lb://gulimall-ums
+          predicates:
+            - Path=/ums/**
+        - id: wms_route
+          uri: lb://gulimall-wms
+          predicates:
+            - Path=/wms/**
+
+

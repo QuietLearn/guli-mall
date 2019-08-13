@@ -7,7 +7,7 @@ import lombok.Data;
 
 @ApiModel
 @Data
-public class QueryCondition {
+public class    QueryCondition {
 
 
     @ApiModelProperty(name = "page",value = "页码",required = false)
@@ -24,4 +24,7 @@ public class QueryCondition {
 
     @ApiModelProperty(name = "asc",value = "系统默认排序",required = false)
     private String asc = "asc";
+
+    @ApiModelProperty(name = "key",value = "搜索关键字key",required = false)
+    private String key;
 }

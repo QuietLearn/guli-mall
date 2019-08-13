@@ -13,7 +13,18 @@
         <result property="seckillCount" column="seckill_count"/>
         <result property="seckillLimit" column="seckill_limit"/>
         <result property="seckillSort" column="seckill_sort"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
-
+    <sql id="Base_Column_List" >
+        id,
+        promotion_id,
+        promotion_session_id,
+        sku_id,
+        seckill_price,
+        seckill_count,
+        seckill_limit,
+        seckill_sort,
+  </sql>
 
 </mapper>

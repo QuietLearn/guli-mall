@@ -7,6 +7,8 @@ import java.util.Map;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.pms.vo.req.SpuBaseattrSkuSaveVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,34 @@ import com.atguigu.gulimall.pms.service.SpuInfoService;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+
+    /**
+     * 以spu为单位上架，spu上架以后，spu下的所有sku也全部上架
+     *
+     * /pms/spuinfo/updateStatus/{spuId}
+     */
+    @ApiOperation("商品上架/下架")
+    @PutMapping("/updateStatus/{spuId}")
+    public ServerResponse updateSpuStatus(@RequestParam("status") Integer status,
+                                        @PathVariable("spuId") Long spuId){
+        //
+
+        return spuInfoService.updateSpuStatus(spuId,status);
+    }
+
+
+    /**
+     * 列表
+     */
+    @ApiOperation("分页查询(排序)")
+    @GetMapping("/simple/search")
+    public ServerResponse<PageVo> listSpuInfo(QueryCondition queryCondition,@RequestParam(name = "catId",defaultValue = "0") Integer catId) {
+
+        return spuInfoService.listSpuInfoByKeywordAndCategoryId(queryCondition,catId);
+
+    }
+
 
     /**
      * 列表
@@ -64,10 +94,10 @@ public class SpuInfoController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('pms:spuinfo:save')")
-    public Resp<Object> save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
+    public ServerResponse saveSpuBaseattrSkuSaveVo(@RequestBody SpuBaseattrSkuSaveVo spuBaseattrSkuSaveVo){
 
-        return Resp.ok(null);
+        //数据存储到数据库，数据落盘
+        return spuInfoService.saveSpuBaseattrSkuSaveVo(spuBaseattrSkuSaveVo);
     }
 
     /**

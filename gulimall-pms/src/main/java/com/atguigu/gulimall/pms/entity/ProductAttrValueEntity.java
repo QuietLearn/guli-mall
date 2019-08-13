@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.pms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -57,5 +59,16 @@ public class ProductAttrValueEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "quickShow",value = "快速展示【是否展示在介绍上；0-否 1-是】")
 	private Integer quickShow;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

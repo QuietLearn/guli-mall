@@ -11,7 +11,16 @@
         <result property="discount" column="discount"/>
         <result property="price" column="price"/>
         <result property="addOther" column="add_other"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
-
+    <sql id="Base_Column_List" >
+        id,
+        sku_id,
+        full_count,
+        discount,
+        price,
+        add_other,
+  </sql>
 
 </mapper>

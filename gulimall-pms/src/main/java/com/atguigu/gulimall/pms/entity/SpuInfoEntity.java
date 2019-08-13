@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.pms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -11,8 +13,8 @@ import lombok.Data;
 /**
  * spu信息
  * 
- * @author leifengyang
- * @email lfy@atguigu.com
+ * @author hyj
+ * @email hyj78586421@outlook.com
  * @date 2019-08-01 15:52:32
  */
 @ApiModel
@@ -55,12 +57,14 @@ public class SpuInfoEntity implements Serializable {
 	/**
 	 * 
 	 */
-	@ApiModelProperty(name = "createTime",value = "")
-	private Date createTime;
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
 	/**
 	 * 
 	 */
-	@ApiModelProperty(name = "uodateTime",value = "")
-	private Date uodateTime;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 
 }

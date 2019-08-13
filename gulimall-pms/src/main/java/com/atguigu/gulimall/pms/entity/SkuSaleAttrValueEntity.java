@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.pms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -30,6 +32,12 @@ public class SkuSaleAttrValueEntity implements Serializable {
 	/**
 	 * sku_id
 	 */
+	@ApiModelProperty(name = "spuId",value = "spuId")
+	private Long spuId;
+
+	/**
+	 * sku_id
+	 */
 	@ApiModelProperty(name = "skuId",value = "sku_id")
 	private Long skuId;
 	/**
@@ -52,5 +60,16 @@ public class SkuSaleAttrValueEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "attrSort",value = "顺序")
 	private Integer attrSort;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.pms.service.impl;
 
+import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.pms.vo.req.AttrRelationDeleteVo;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,6 +27,20 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
         );
 
         return new PageVo(page);
+    }
+
+    @Override
+    public ServerResponse deleteAttrAndRelation(AttrRelationDeleteVo[] attrRelationDeleteVo) {
+        if (attrRelationDeleteVo != null && attrRelationDeleteVo.length > 0) {
+            for (AttrRelationDeleteVo deleteVo : attrRelationDeleteVo) {
+                this.remove(
+                        new QueryWrapper<AttrAttrgroupRelationEntity>()
+                                .eq("attr_group_id",deleteVo.getAttrGroupId())
+                                .eq("attr_id",deleteVo.getAttrId()));
+            }
+        }
+
+        return ServerResponse.createBySuccessMessage("删除属性与组关系成功");
     }
 
 }

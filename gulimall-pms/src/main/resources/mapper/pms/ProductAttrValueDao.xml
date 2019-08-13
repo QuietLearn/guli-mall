@@ -12,7 +12,24 @@
         <result property="attrValue" column="attr_value"/>
         <result property="attrSort" column="attr_sort"/>
         <result property="quickShow" column="quick_show"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
 
+    <!--  void insertBatch(@Param("baseAttrs")List<ProductAttrValueEntity> allSave);-->
+    <insert id="insertBatch" >
+        INSERT INTO `pms_product_attr_value`
+        (spu_id,attr_id,attr_name,attr_value,attr_sort,quick_show
+        ,gmt_create,gmt_modified)
+        VALUES
+        <foreach collection="baseAttrs" item="attr" separator=",">
+            (
+            #{attr.spuId},#{attr.attrId},#{attr.attrName},
+            #{attr.attrValue},#{attr.attrSort},#{attr.quickShow},
+            #{attr.gmtCreate},#{attr.gmtModified}
+            )
+        </foreach>
+
+    </insert>
 </mapper>

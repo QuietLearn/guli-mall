@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.sms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +16,7 @@ import lombok.Data;
  * 
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:01
+ * @date 2019-08-05 17:09:58
  */
 @ApiModel
 @Data
@@ -53,5 +55,16 @@ public class MemberPriceEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "addOther",value = "可否叠加其他优惠[0-不可叠加优惠，1-可叠加]")
 	private Integer addOther;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

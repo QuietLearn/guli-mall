@@ -7,6 +7,9 @@ import java.util.Map;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.pms.common.Const;
+import com.atguigu.gulimall.pms.vo.req.AttrGidVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,40 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+
+    /**
+     * 查询某个三级分类下的所有基本属性
+     */
+    @ApiOperation("查询某个三级分类下的所有基本属性")
+    @GetMapping("/base/{categoryId}")
+    public ServerResponse selectBaseAttrByCategory(QueryCondition queryCondition,@PathVariable("categoryId") Long categoryId) {
+
+        return attrService.selectAttrByCategoryId(queryCondition,categoryId, Const.AttrType.BASE_ATTR);
+    }
+
+    /**
+     * 查询某个三级分类下的所有销售属性
+     */
+    @ApiOperation("查询某个三级分类下的所有销售属性")
+    @GetMapping("/sale/{categoryId}")
+    public ServerResponse selectSaleAttrByCategory(QueryCondition queryCondition,@PathVariable("categoryId") Long categoryId) {
+
+        return attrService.selectAttrByCategoryId(queryCondition,categoryId, Const.AttrType.SALE_ATTR);
+    }
+
+
+    /**
+     * 查询某个分组下对应的所有属性
+     */
+    @ApiOperation("查询某个分组下对应的所有属性")
+    @GetMapping("/group/list/{groupId}")
+    public ServerResponse selectBaseAttrByGroup(QueryCondition queryCondition,@PathVariable("groupId") Long groupId,Integer attrType) {
+
+        return attrService.selectAttrByGroupId(queryCondition,groupId,attrType);
+    }
+
+
+
     /**
      * 列表
      */
@@ -47,16 +84,16 @@ public class AttrController {
 
 
     /**
-     * 信息
+     * 查出某个属性，以及这个属性所属的分组信息
      */
-    @ApiOperation("详情查询")
+    @ApiOperation("查出某个属性，以及这个属性所属的分组信息")
     @GetMapping("/info/{attrId}")
     @PreAuthorize("hasAuthority('pms:attr:info')")
-    public Resp<AttrEntity> info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+    public ServerResponse selectAttrInfoWithGroup(@PathVariable("attrId") Long attrId) {
 
-        return Resp.ok(attr);
+        return attrService.selectAttrInfoWithGroup(attrId);
     }
+
 
     /**
      * 保存
@@ -64,17 +101,18 @@ public class AttrController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('pms:attr:save')")
-    public Resp<Object> save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public ServerResponse<Object> save(@RequestBody AttrGidVo attrGidVo){
 
-        return Resp.ok(null);
+
+        return attrService.saveAttr(attrGidVo);
     }
 
     /**
      * 修改
      */
     @ApiOperation("修改")
-    @PostMapping("/update")
+//    @PutMapping("/update/{attrId}"),@PathVariable("attrId") Long attrId 前端也需要改为put提交干
+    @PostMapping("/update/{attrId}")
     @PreAuthorize("hasAuthority('pms:attr:update')")
     public Resp<Object> update(@RequestBody AttrEntity attr){
 		attrService.updateById(attr);

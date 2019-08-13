@@ -24,7 +24,7 @@ import com.atguigu.gulimall.sms.service.SeckillSkuRelationService;
  *
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:02
+ * @date 2019-08-05 17:09:58
  */
 @Api(tags = "秒杀活动商品关联 管理")
 @RestController

@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.pms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -47,5 +49,16 @@ public class SkuImagesEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "defaultImg",value = "默认图[0 - 不是默认图，1 - 是默认图]")
 	private Integer defaultImg;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

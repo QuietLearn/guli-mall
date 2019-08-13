@@ -1,12 +1,14 @@
 package com.atguigu.gulimall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.bean.ServerResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,25 @@ public class CategoryController {
         PageVo page = categoryService.queryPage(queryCondition);
 
         return Resp.ok(page);
+    }
+
+    /**
+     * 获取某个等级所有分类数据
+     * @param level 0-3；0代表获取所有等级，其他对应各自等级
+     * @return
+     */
+    @ApiOperation("商品三级分类列表，用于树形展示")
+    @GetMapping("/list/tree")
+    public ServerResponse<List<CategoryEntity>> listCategoryTree(@RequestParam("level") Integer level){
+
+        return categoryService.listCategoryTree(level);
+    }
+
+    @ApiOperation("获取某个分类的所有子分类")
+    @GetMapping("/list/children/tree/{catId}")
+    public ServerResponse<List<CategoryEntity>> getChildCategory(@PathVariable("catId") Integer catId){
+
+        return categoryService.getChildCategory(catId);
     }
 
 

@@ -9,6 +9,10 @@
         <result property="${column.attrname}" column="${column.columnName}"/>
 #end
     </resultMap>
-
+    <sql id="Base_Column_List" >
+#foreach($column in $columns)
+        ${column.columnName},
+#end
+  </sql>
 
 </mapper>

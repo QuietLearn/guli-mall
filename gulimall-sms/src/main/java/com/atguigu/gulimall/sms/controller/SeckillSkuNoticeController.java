@@ -24,7 +24,7 @@ import com.atguigu.gulimall.sms.service.SeckillSkuNoticeService;
  *
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:02
+ * @date 2019-08-05 17:09:58
  */
 @Api(tags = "秒杀商品通知订阅 管理")
 @RestController

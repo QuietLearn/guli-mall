@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.sms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +16,7 @@ import lombok.Data;
  * 
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:01
+ * @date 2019-08-05 17:09:58
  */
 @ApiModel
 @Data
@@ -48,5 +50,16 @@ public class SpuBoundsEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "work",value = "优惠生效情况[1111（四个状态位，从右到左）;0 - 无优惠，成长积分是否赠送;1 - 无优惠，购物积分是否赠送;2 - 有优惠，成长积分是否赠送;3 - 有优惠，购物积分是否赠送【状态位0：不赠送，1：赠送】]")
 	private Integer work;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

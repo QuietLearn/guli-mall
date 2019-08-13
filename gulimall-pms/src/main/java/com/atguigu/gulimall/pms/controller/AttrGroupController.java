@@ -6,6 +6,9 @@ import java.util.Arrays;
 import com.atguigu.gulimall.commons.bean.PageVo;
 import com.atguigu.gulimall.commons.bean.QueryCondition;
 import com.atguigu.gulimall.commons.bean.Resp;
+import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.pms.common.Const;
+import com.atguigu.gulimall.pms.vo.resp.AttrgroupWithAttrsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,34 @@ import com.atguigu.gulimall.pms.service.AttrGroupService;
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
+
+
+
+
+    /**
+     * 查询某个三级分类下的所有属性分组
+     *
+     * 极其建议和新建spu及相关信息 列出对应分类分组属性和方便选取的建议值  的接口分开
+     *
+     * 因为在分组、基本属性和销售属性列表页面 数据重复了，带宽增大，要么1个，要么3个分开
+     */
+    @ApiOperation("查询某个三级分类下的所有属性分组")
+    @GetMapping("/list/category/{catId}")
+    public ServerResponse<PageVo> listAttrGroupByCatId(QueryCondition queryCondition, @PathVariable("catId") Long catId) {
+
+        return attrGroupService.listAttrGroupWithAttrsByCatId(queryCondition,catId, Const.AttrType.BASE_ATTR);
+    }
+
+    /**
+     * 查询某个分组以及分组下面的所有属性信息
+     */
+    @ApiOperation("查询某个分组以及分组下面的所有属性信息")
+    @GetMapping("/info/withattrs/{attrGroupId}")
+    public ServerResponse<AttrgroupWithAttrsVo> selectAttrGroupWithattrs(@PathVariable("attrGroupId") Long attrGroupId) {
+
+        return attrGroupService.selectAttrGroupWithattrs(attrGroupId,null);
+    }
+
 
     /**
      * 列表

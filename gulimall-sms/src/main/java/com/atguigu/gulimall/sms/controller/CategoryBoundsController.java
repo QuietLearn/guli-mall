@@ -24,7 +24,7 @@ import com.atguigu.gulimall.sms.service.CategoryBoundsService;
  *
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:01
+ * @date 2019-08-05 17:09:58
  */
 @Api(tags = "秒杀/营销数据库---商品分类积分设置 管理")
 @RestController

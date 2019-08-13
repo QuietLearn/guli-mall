@@ -3,13 +3,17 @@ server:
 
 spring:
   application:
-    name: guli-ucenter # 服务名
+    name: gulimall-pms  # 服务名
   profiles:
     active: dev    # 环境设置：dev、test、prod
   #返回json的全局时间格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss #默认情况下json时间格式带有时区，并且是世界标准时间，和我们的时间差了八个小时
     time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 
 

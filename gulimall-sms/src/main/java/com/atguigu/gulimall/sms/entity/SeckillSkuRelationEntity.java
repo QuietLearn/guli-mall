@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.sms.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +16,7 @@ import lombok.Data;
  * 
  * @author heyijie
  * @email hyj78586421@outlook.com
- * @date 2019-08-01 19:20:02
+ * @date 2019-08-05 17:09:58
  */
 @ApiModel
 @Data
@@ -63,5 +65,16 @@ public class SeckillSkuRelationEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "seckillSort",value = "排序")
 	private Integer seckillSort;
-
+	/**
+	 *
+	 */
+	@ApiModelProperty(name = "gmtCreate",value = "")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
+	/**
+	 *
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@ApiModelProperty(name = "gmtModified",value = "")
+	private Date gmtModified;
 }

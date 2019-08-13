@@ -12,7 +12,17 @@
         <result property="subcribeTime" column="subcribe_time"/>
         <result property="sendTime" column="send_time"/>
         <result property="noticeType" column="notice_type"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
-
+    <sql id="Base_Column_List" >
+        id,
+        member_id,
+        sku_id,
+        session_id,
+        subcribe_time,
+        send_time,
+        notice_type,
+  </sql>
 
 </mapper>

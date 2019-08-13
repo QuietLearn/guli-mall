@@ -1,0 +1,27 @@
+
+server:
+  port: 11000
+
+spring:
+  application:
+    name: gulimall-sms  # 服务名
+  profiles:
+    active: dev    # 环境设置：dev、test、prod
+  #返回json的全局时间格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #默认情况下json时间格式带有时区，并且是世界标准时间，和我们的时间差了八个小时
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+
+mybatis-plus:
+  # 配置让mabatis的sqlsessionfactory的configuration包含所有的xml文件，mapper动态代理通过sqlsession，
+  # sqlsession是factory生成的，间接通过factory找到id对应的statement执行sql
+  mapper-locations: classpath:mapper/sms/*.xml
+  global-config:
+    db-config:
+      id-type: auto
