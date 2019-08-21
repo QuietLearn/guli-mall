@@ -16,7 +16,6 @@ spring:
         server-addr: 127.0.0.1:8848
 
 
-
 mybatis-plus:
   # 配置让mabatis的sqlsessionfactory的configuration包含所有的xml文件，mapper动态代理通过sqlsession，
   # sqlsession是factory生成的，间接通过factory找到id对应的statement执行sql

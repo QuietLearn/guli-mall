@@ -5,7 +5,10 @@ spring:
         - id: pms_route
           uri: lb://gulimall-pms
           predicates:
-            - Path=/pms/**, /index/**
+            - Path=/pms/**, /api/index/**, /api/item/**
+          filters:
+            # {} 是用来取值的
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
 
         - id: oms_route
           uri: lb://gulimall-oms
@@ -25,5 +28,11 @@ spring:
           uri: lb://gulimall-wms
           predicates:
             - Path=/wms/**
-
+        - id: gulimall_search_route
+          uri: lb://gulimall-search
+          predicates:
+            # 可能会有特殊字符转义 \{
+            - Path=/api/search/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
 

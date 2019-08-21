@@ -42,6 +42,8 @@ public class EsSkuVo {
     private Long brandId;
     //品牌名
     private String brandName;
+//    todo 还是直接存在es中把，不然如果没有这个字段还要去从数据库查，那么es的目的在哪里，告诉我
+    private String brandLogo;
 
     //todo sku的默认图片 pic
     @ApiModelProperty(name = "skuDefaultImg",value = "默认图片")

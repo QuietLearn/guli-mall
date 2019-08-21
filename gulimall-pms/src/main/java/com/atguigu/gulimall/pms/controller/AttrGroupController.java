@@ -36,8 +36,6 @@ public class AttrGroupController {
     private AttrGroupService attrGroupService;
 
 
-
-
     /**
      * 查询某个三级分类下的所有属性分组
      *

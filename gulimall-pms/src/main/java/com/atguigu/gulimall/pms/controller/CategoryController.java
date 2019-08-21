@@ -35,16 +35,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    /**
-     * 列表
-     */
-    @ApiOperation("分页查询(排序)")
-    @GetMapping("/list")
-    @PreAuthorize("hasAuthority('pms:category:list')")
-    public Resp<PageVo> list(QueryCondition queryCondition) {
-        PageVo page = categoryService.queryPage(queryCondition);
+    @ApiOperation("获取某个分类的所有子分类")
+    @GetMapping("/list/children/tree/{catId}")
+    public ServerResponse<List<CategoryEntity>> getChildCategory(@PathVariable("catId") Integer catId){
 
-        return Resp.ok(page);
+        return categoryService.getChildCategory(catId);
     }
 
     /**
@@ -59,13 +54,17 @@ public class CategoryController {
         return categoryService.listCategoryTree(level);
     }
 
-    @ApiOperation("获取某个分类的所有子分类")
-    @GetMapping("/list/children/tree/{catId}")
-    public ServerResponse<List<CategoryEntity>> getChildCategory(@PathVariable("catId") Integer catId){
+    /**
+     * 列表
+     */
+    @ApiOperation("分页查询(排序)")
+    @GetMapping("/list")
+    @PreAuthorize("hasAuthority('pms:category:list')")
+    public Resp<PageVo> list(QueryCondition queryCondition) {
+        PageVo page = categoryService.queryPage(queryCondition);
 
-        return categoryService.getChildCategory(catId);
+        return Resp.ok(page);
     }
-
 
     /**
      * 信息

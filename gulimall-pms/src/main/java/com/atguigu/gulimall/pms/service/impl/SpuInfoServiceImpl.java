@@ -565,8 +565,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         SpuInfoEntity spuInfo = spuInfoDao.selectById(spuId);
 
         QueryWrapper<BrandEntity> brandQueryWrapper = new QueryWrapper<BrandEntity>().eq("brand_id", spuInfo.getBrandId());
-        brandQueryWrapper.select("name");
-        String brandName = (String) brandDao.selectObjs(brandQueryWrapper).get(0);
+        brandQueryWrapper.select("name","logo");
+        BrandEntity brandEntity = brandDao.selectOne(brandQueryWrapper);
+        String brandName = brandEntity.getName();
+        String brandLogo =  brandEntity.getLogo();
 
 
         QueryWrapper<CategoryEntity> categoryEntityQueryWrapper = new QueryWrapper<CategoryEntity>().eq("cat_id", spuInfo.getCatalogId());
@@ -607,6 +609,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esSkuVo.setProductCategoryId(spuInfo.getCatalogId());
 
             esSkuVo.setBrandName(brandName);
+            esSkuVo.setBrandLogo(brandLogo);
 
             esSkuVo.setProductCategoryName(categoryName);
 

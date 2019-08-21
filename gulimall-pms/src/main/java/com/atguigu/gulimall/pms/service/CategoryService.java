@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.pms.service;
 
 import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.pms.vo.CategoryWithChildrensVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gulimall.pms.entity.CategoryEntity;
 import com.atguigu.gulimall.commons.bean.PageVo;
@@ -29,5 +30,7 @@ public interface CategoryService extends IService<CategoryEntity> {
     ServerResponse<List<CategoryEntity>> getChildCategory(Integer catId);
 
     ServerResponse<List<Long>> getDeepCategory(Integer catId);
+
+    List<CategoryWithChildrensVo> getCategoryChildrensAndSubsById(Integer id);
 }
 

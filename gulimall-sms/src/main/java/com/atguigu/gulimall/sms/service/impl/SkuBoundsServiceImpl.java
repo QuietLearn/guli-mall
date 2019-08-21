@@ -87,8 +87,11 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsDao, SkuBoundsEnt
             SkuLadderEntity ladderEntity = new SkuLadderEntity();
             ladderEntity.setFullCount(skuSaleInfoTo.getFullCount());
             ladderEntity.setDiscount(skuSaleInfoTo.getDiscount());
+
             ladderEntity.setAddOther(skuSaleInfoTo.getLadderAddOther());
+
             ladderEntity.setSkuId(skuSaleInfoTo.getSkuId());
+
             skuLadderDao.insert(ladderEntity);
 
 
@@ -103,4 +106,10 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsDao, SkuBoundsEnt
         return ServerResponse.createBySuccessMessage(" 积分信息，阶梯价格，满减信息保存成功");
     }
 
+    public static void main(String[] args) {
+        new Thread(()->{
+
+            }
+        );
+    }
 }

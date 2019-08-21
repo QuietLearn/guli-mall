@@ -28,5 +28,7 @@ public class SkuSaleInfoTo {
      */
     private BigDecimal fullPrice;
     private BigDecimal reducePrice;
+
+    //todo fullAddOther 加不进去？
     private Integer fullAddOther;
 }

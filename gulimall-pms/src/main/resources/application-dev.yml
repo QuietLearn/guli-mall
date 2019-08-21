@@ -8,3 +8,6 @@ spring:
     password: 123456
     # Hikari是Spring Boot 2.0之后默认整合的数据库连接池，比druid更快的数据库连接池
     # 数据源类型
+  redis:
+    host: 192.168.101.128
+    port: 6379

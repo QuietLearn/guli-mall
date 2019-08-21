@@ -6,17 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gulimall-core" />
-        <module name="guli-generator" />
-        <module name="es-demo" />
-        <module name="gulimall-admin" />
-        <module name="gulimall-wms" />
-        <module name="gulimall-ums" />
-        <module name="gulimall-sms" />
         <module name="gulimall-gateway" />
-        <module name="gulimall-oms" />
-        <module name="gulimall-pms" />
+        <module name="sso-server" />
         <module name="gulimall-search" />
+        <module name="guli-generator" />
+        <module name="gulimall-oms" />
+        <module name="sso-client" />
+        <module name="gulimall-pms" />
+        <module name="gulimall-core" />
+        <module name="gulimall-sms" />
+        <module name="gulimall-ums" />
+        <module name="gulimall-wms" />
+        <module name="gulimall-admin" />
+        <module name="lock-test" />
+        <module name="es-demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -32,6 +35,9 @@
       <module name="gulimall-sms" target="1.8" />
       <module name="gulimall-ums" target="1.8" />
       <module name="gulimall-wms" target="1.8" />
+      <module name="lock-test" target="1.8" />
+      <module name="sso-client" target="1.8" />
+      <module name="sso-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -46,6 +52,9 @@
       <module name="gulimall-sms" options="-parameters" />
       <module name="gulimall-ums" options="-parameters" />
       <module name="gulimall-wms" options="-parameters" />
+      <module name="lock-test" options="-parameters" />
+      <module name="sso-client" options="-parameters" />
+      <module name="sso-server" options="-parameters" />
     </option>
   </component>
 </project>

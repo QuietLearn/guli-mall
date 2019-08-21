@@ -1,14 +1,17 @@
 package com.atguigu.gulimall.pms.service.impl;
 
 import com.atguigu.gulimall.commons.bean.*;
+import com.atguigu.gulimall.pms.annotation.GuliCache;
+import com.atguigu.gulimall.pms.vo.CategoryWithChildrensVo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,10 +23,14 @@ import com.atguigu.gulimall.pms.entity.CategoryEntity;
 import com.atguigu.gulimall.pms.service.CategoryService;
 
 
+@Slf4j
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
 //    CategoryDao extends baseMapper
+    @Autowired
+    CategoryDao categoryDao;
+    
     @Override
     public PageVo queryPage(QueryCondition params) {
         IPage<CategoryEntity> page = this.page(
@@ -66,6 +73,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
 
+    /**
+     * 递归查询该catId下面的所有子分类，子子分类，子子子分类，直到没有
+     * @param catId
+     * @return
+     */
     @Override
     public ServerResponse<List<Long>> getDeepCategory(Integer catId) {
         if (catId==null){
@@ -83,6 +95,43 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             return ServerResponse.createBySuccess(categoryIdList);
         }
         return ServerResponse.createByErrorMessage("没有查询到该品类和下面的子品类");
+    }
+
+    /**
+     * 类似这种需要将数据放入缓存，后从缓存读取数据的重复需求，可以用AOP切面完成
+     * 可以编写一个Filter；
+     * 利用AOP原理
+     *
+     * key； 前缀+id
+     * product:1
+     * catelog:1
+     * @param id
+     * @return
+     */
+    @Override
+    @GuliCache(prefix = Constant.CategoryInfo.REDIS_CACHE_PREFIX)
+    public List<CategoryWithChildrensVo> getCategoryChildrensAndSubsById(Integer id) {
+        log.info("目标方法运行");
+        System.out.println("service---线程..." + Thread.currentThread().getId());
+        List<CategoryWithChildrensVo> vos = categoryDao.selectCategoryChildrenWithChildrens(id);
+
+        /**
+         * 1、缓存穿透：null值缓存，设置短暂的过期时间
+         * 2、缓存雪崩：过期时间+随机值
+         * 3、缓存击穿：分布式锁
+         */
+//        String s = redisTemplate.opsForValue().get(Constant.CACHE_CATELOG);
+//        if(!StringUtils.isEmpty(s)){
+//            log.info("菜单数据缓存命中...");
+//            vos = JSON.parseArray(s, CategoryWithChildrensVo.class);
+//        }else {
+//            //1、缓存中没有，查数据库
+//            log.info("菜单数据缓存没命中...正在查询数据库");
+//            vos = categoryDao.selectCategoryChildrenWithChildrens(id);
+//            //2、放到缓存中
+//            redisTemplate.opsForValue().set(Constant.CACHE_CATELOG,JSON.toJSONString(vos));
+//      }
+        return vos;
     }
 
 
