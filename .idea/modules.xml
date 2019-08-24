@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/es-demo/es-demo.iml" filepath="$PROJECT_DIR$/es-demo/es-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guli-cart/guli-cart.iml" filepath="$PROJECT_DIR$/guli-cart/guli-cart.iml" />
       <module fileurl="file://$PROJECT_DIR$/guli-generator/guli-generator.iml" filepath="$PROJECT_DIR$/guli-generator/guli-generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall.iml" filepath="$PROJECT_DIR$/gulimall.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" filepath="$PROJECT_DIR$/gulimall-admin/gulimall-admin.iml" />

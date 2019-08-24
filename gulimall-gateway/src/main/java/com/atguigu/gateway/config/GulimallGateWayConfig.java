@@ -38,4 +38,14 @@ public class GulimallGateWayConfig {
 
         return filter;
     }
+
+    /**
+     * 全局过滤器或者gatewayfilterfactory都是在容器中添加的时候有序的。
+     *
+     * 如果我们的过滤器顺序太低，导致上一个放行不过就来不到这里。
+     * @return
+     *
+     * @bean
+     */
+//
 }

@@ -22,7 +22,7 @@
         <result property="integration" column="integration"/>
         <result property="growth" column="growth"/>
         <result property="status" column="status"/>
-        <result property="createTime" column="create_time"/>
+        <result property="gmtCreate" column="gmt_create"/>
     </resultMap>
 
 

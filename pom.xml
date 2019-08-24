@@ -18,6 +18,7 @@
         <module>gulimall-sms</module>
         <module>gulimall-ums</module>
         <module>gulimall-wms</module>
+        <module>gulimall-gateway</module>
     </modules>
 
 

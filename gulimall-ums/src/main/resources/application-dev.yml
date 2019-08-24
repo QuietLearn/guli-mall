@@ -1,0 +1,22 @@
+# mysql数据库连接
+spring:
+  datasource:
+    #useUnicode=true&
+    url: jdbc:mysql://192.168.101.128:3306/guli_ums?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    # Hikari是Spring Boot 2.0之后默认整合的数据库连接池，比druid更快的数据库连接池
+    # 数据源类型
+  redis :
+    host: 192.168.101.128
+    port: 6379
+    jedis:
+      pool:
+        # spring家的redistemplate可能有问题，它带的连接（线程）池 没调大
+        # 默认值 在生产环境肯定是不够用的，并发连接redis量
+        # ?? 就算 连接池大了，并发可以有100请求 连接redis查询数据，但是redis不是单线程的吗，并发连接池有什么用
+        # 线程池最大有100 是活跃的，
+        max-active: 100
+        # 最大空闲数，如果线程池空闲下来了，最多保留的线程数
+        max-idle: 10

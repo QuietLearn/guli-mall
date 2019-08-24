@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.ums.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -110,7 +112,8 @@ public class MemberEntity implements Serializable {
 	/**
 	 * 注册时间
 	 */
-	@ApiModelProperty(name = "createTime",value = "注册时间")
-	private Date createTime;
+	@ApiModelProperty(name = "gmtCreate",value = "注册时间")
+	@TableField(fill = FieldFill.INSERT)
+	private Date gmtCreate;
 
 }

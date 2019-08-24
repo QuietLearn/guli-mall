@@ -21,6 +21,13 @@ public class ItemController {
     @Autowired
     ItemService itemService;
 
+    /**
+     * 获取sku 详情
+     * @param skuId
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @GetMapping("/item/{skuId}.html")
     public Resp<SkuItemDetailVo> skuDetails(@PathVariable("skuId") Long skuId) throws ExecutionException, InterruptedException {
         //获取商品详情

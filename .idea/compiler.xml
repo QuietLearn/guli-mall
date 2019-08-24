@@ -9,9 +9,10 @@
         <module name="gulimall-gateway" />
         <module name="sso-server" />
         <module name="gulimall-search" />
+        <module name="guli-cart" />
         <module name="guli-generator" />
-        <module name="gulimall-oms" />
         <module name="sso-client" />
+        <module name="gulimall-oms" />
         <module name="gulimall-pms" />
         <module name="gulimall-core" />
         <module name="gulimall-sms" />
@@ -24,6 +25,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="es-demo" target="1.8" />
+      <module name="guli-cart" target="1.8" />
       <module name="guli-generator" target="1.8" />
       <module name="gulimall" target="1.8" />
       <module name="gulimall-admin" target="1.8" />
@@ -43,6 +45,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="es-demo" options="-parameters" />
+      <module name="guli-cart" options="-parameters" />
       <module name="guli-generator" options="-parameters" />
       <module name="gulimall-admin" options="-parameters" />
       <module name="gulimall-gateway" options="-parameters" />
