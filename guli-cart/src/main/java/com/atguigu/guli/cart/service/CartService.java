@@ -4,10 +4,15 @@ import com.atguigu.guli.cart.vo.CartVo;
 import com.atguigu.gulimall.commons.bean.ServerResponse;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public interface CartService {
 
-    ServerResponse getCartDetail(String userKey, String authorization);
+    ServerResponse getCartDetail(String userKey, String authorization) throws ExecutionException, InterruptedException;
 
-    Map addProductToCart(Long skuId, Integer num, String userKey, String authorization);
+    CartVo addProductToCart(Long skuId, Integer num, String userKey, String authorization) throws ExecutionException, InterruptedException;
+
+    CartVo updateCart(Long skuId, Integer num, String userKey, String authorization);
+
+    CartVo checkCart(Long[] skuId, Integer status, String userKey, String authorization);
 }

@@ -10,8 +10,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  *
  * (exclude = {DataSourceAutoConfiguration.class})
  */
-//@RefreshScope
-//@EnableDiscoveryClient
+@RefreshScope
+@EnableDiscoveryClient
 @SpringBootApplication
 public class GulimallGatewayApplication {
 

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @ApiModel
 @Data
-public class    QueryCondition {
+public class QueryCondition {
 
 
     @ApiModelProperty(name = "page",value = "页码",required = false)

@@ -7,10 +7,12 @@ public class Constant {
 
     public interface CategoryInfo{
         String REDIS_CACHE_PREFIX="cache:category";
+
     }
 
     public interface CartInfo {
        String CART_PREFIX = "cart:user:";
+        Long UNLOGIN_CART_TIMEOUT = 30L;
     }
 
     public static final String FRONT_SESSION_LOGIN_MEMBER="loginUser";

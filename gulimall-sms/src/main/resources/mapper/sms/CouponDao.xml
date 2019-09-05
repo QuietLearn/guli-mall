@@ -29,19 +29,9 @@
         <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
     <sql id="Base_Column_List" >
-        id,
-        coupon_type,
-        coupon_img,
-        coupon_name,
-        num,
-        amount,
-        per_limit,
-        min_point,
-        start_time,
-        end_time,
-        use_type,
-        note,
-        publish_count,
+        id,coupon_type,coupon_img,coupon_name,num,
+        amount,per_limit,min_point,start_time,end_time,
+        use_type,note,publish_count,
         use_count,
         receive_count,
         enable_start_time,
@@ -50,5 +40,13 @@
         member_level,
         publish,
   </sql>
+
+    <!--    List<CouponEntity> selectCouponsBySpuId(Long spuId);-->
+    <select id="selectCouponsBySpuId" resultMap="couponMap">
+        select c.* from `sms_coupon` c
+        left join `sms_coupon_spu_relation` sr
+        on sr.`coupon_id`=c.`id`
+        where sr.`spu_id`=#{spuId}
+    </select>
 
 </mapper>

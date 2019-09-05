@@ -3,6 +3,7 @@ package com.atguigu.lock.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.*;
 
@@ -191,3 +192,19 @@ class HelloThread implements Runnable {
 }
 
 
+class Threadg{
+    String name;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Threadg threadg = (Threadg) o;
+        return Objects.equals(name, threadg.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+}

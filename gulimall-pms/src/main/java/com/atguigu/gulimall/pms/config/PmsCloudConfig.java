@@ -32,6 +32,7 @@ public class PmsCloudConfig {
                 keepAliveTime,
                 TimeUnit.SECONDS,
 //                队列的大小也可以根据系统性能自定义【内存大小】
+//                Queue(无界队列 | 如果不改默认大小是Integer.maxValue) ，高并发时，很可能队列也会挤爆，到时用拒绝策略 要么丢弃要么让它等待
                 new LinkedBlockingQueue<Runnable>(Integer.MAX_VALUE/2));
 
         return threadPoolExecutor;
