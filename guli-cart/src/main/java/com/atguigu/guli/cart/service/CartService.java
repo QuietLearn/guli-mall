@@ -1,6 +1,7 @@
 package com.atguigu.guli.cart.service;
 
 import com.atguigu.guli.cart.vo.CartVo;
+import com.atguigu.guli.cart.vo.ClearCartSkuVo;
 import com.atguigu.gulimall.commons.bean.ServerResponse;
 
 import java.util.Map;
@@ -15,4 +16,8 @@ public interface CartService {
     CartVo updateCart(Long skuId, Integer num, String userKey, String authorization);
 
     CartVo checkCart(Long[] skuId, Integer status, String userKey, String authorization);
+
+    CartVo getCartForOrder(Long id);
+
+    void clearSkuIds(ClearCartSkuVo skuVo);
 }

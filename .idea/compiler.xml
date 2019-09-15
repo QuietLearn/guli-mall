@@ -12,6 +12,7 @@
         <module name="guli-cart" />
         <module name="guli-generator" />
         <module name="sso-client" />
+        <module name="gulimall-order" />
         <module name="gulimall-oms" />
         <module name="gulimall-pms" />
         <module name="gulimall-core" />
@@ -27,11 +28,12 @@
       <module name="es-demo" target="1.8" />
       <module name="guli-cart" target="1.8" />
       <module name="guli-generator" target="1.8" />
-      <module name="gulimall" target="1.8" />
+      <module name="gulimall" target="1.5" />
       <module name="gulimall-admin" target="1.8" />
-      <module name="gulimall-core" target="1.8" />
+      <module name="gulimall-core" target="1.5" />
       <module name="gulimall-gateway" target="1.8" />
       <module name="gulimall-oms" target="1.8" />
+      <module name="gulimall-order" target="1.8" />
       <module name="gulimall-pms" target="1.8" />
       <module name="gulimall-search" target="1.8" />
       <module name="gulimall-sms" target="1.8" />
@@ -50,6 +52,7 @@
       <module name="gulimall-admin" options="-parameters" />
       <module name="gulimall-gateway" options="-parameters" />
       <module name="gulimall-oms" options="-parameters" />
+      <module name="gulimall-order" options="-parameters" />
       <module name="gulimall-pms" options="-parameters" />
       <module name="gulimall-search" options="-parameters" />
       <module name="gulimall-sms" options="-parameters" />

@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/gulimall-core/gulimall-core.iml" filepath="$PROJECT_DIR$/gulimall-core/gulimall-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-gateway/gulimall-gateway.iml" filepath="$PROJECT_DIR$/gulimall-gateway/gulimall-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-oms/gulimall-oms.iml" filepath="$PROJECT_DIR$/gulimall-oms/gulimall-oms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gulimall-order/gulimall-order.iml" filepath="$PROJECT_DIR$/gulimall-order/gulimall-order.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-pms/gulimall-pms.iml" filepath="$PROJECT_DIR$/gulimall-pms/gulimall-pms.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-search/gulimall-search.iml" filepath="$PROJECT_DIR$/gulimall-search/gulimall-search.iml" />
       <module fileurl="file://$PROJECT_DIR$/gulimall-sms/gulimall-sms.iml" filepath="$PROJECT_DIR$/gulimall-sms/gulimall-sms.iml" />

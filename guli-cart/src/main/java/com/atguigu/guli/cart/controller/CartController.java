@@ -2,15 +2,20 @@ package com.atguigu.guli.cart.controller;
 
 import com.atguigu.guli.cart.service.CartService;
 import com.atguigu.guli.cart.vo.CartVo;
+import com.atguigu.guli.cart.vo.ClearCartSkuVo;
 import com.atguigu.gulimall.commons.bean.Resp;
 import com.atguigu.gulimall.commons.bean.ServerResponse;
+import com.atguigu.gulimall.commons.utils.GuliJwtUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -26,6 +31,30 @@ public class CartController {
     @Autowired
     @Qualifier("otherExecutor")
     ThreadPoolExecutor executor;
+
+
+    @GetMapping("/clearCartSku")
+    public Resp<Object> clearSkuIds(@RequestBody ClearCartSkuVo skuVo){
+        
+        cartService.clearSkuIds(skuVo);
+
+        return Resp.ok(null);
+
+    }
+
+
+    @ApiOperation("返回购物车中所有选中的额商品以及总价格，优惠等信息")
+    @GetMapping("/getItemsForOrder")
+    public Resp<CartVo> getCartCheckItemsAndStatics(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
+        Map<String, Object> jwtBody = GuliJwtUtils.getJwtBody(authorization);
+        Long id = Long.parseLong(jwtBody.get("id").toString());
+        System.out.println(request);
+
+        CartVo cartVo = cartService.getCartForOrder(id);
+
+        return Resp.ok(cartVo);
+    }
     /**
      * 可以在业务运行期间通过运维控制平台，关闭一些非核心线程池 资源，释放
      * @return

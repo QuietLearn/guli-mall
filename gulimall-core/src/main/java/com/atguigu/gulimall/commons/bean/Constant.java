@@ -5,6 +5,8 @@ public class Constant {
     public static  final String ES_GULIMALL_INDEX = "gulimall";
     public static  final String ES_SPU_TYPE = "spu";
 
+    public static  final String TOKENS = "guli:tokens:";
+    public static  final Long TOKENS_TIMEOUT = 30L; //以分钟为单位
     public interface CategoryInfo{
         String REDIS_CACHE_PREFIX="cache:category";
 

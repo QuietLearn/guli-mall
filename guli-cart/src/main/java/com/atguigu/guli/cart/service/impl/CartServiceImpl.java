@@ -6,10 +6,7 @@ import com.atguigu.guli.cart.feign.SkuCouponRedutionFeignService;
 import com.atguigu.guli.cart.feign.SkuFeignService;
 import com.atguigu.guli.cart.service.CartService;
 import com.atguigu.guli.cart.to.SkuCouponTo;
-import com.atguigu.guli.cart.vo.CartItemVo;
-import com.atguigu.guli.cart.vo.CartVo;
-import com.atguigu.guli.cart.vo.SkuCouponVo;
-import com.atguigu.guli.cart.vo.SkuFullReductionVo;
+import com.atguigu.guli.cart.vo.*;
 import com.atguigu.gulimall.commons.bean.Constant;
 import com.atguigu.gulimall.commons.bean.ServerResponse;
 import com.atguigu.gulimall.commons.to.pms.SkuInfoVo;
@@ -54,6 +51,7 @@ public class CartServiceImpl implements CartService {
 
     /**
      * 获取购物车
+     *
      * @param userKey
      * @param authorization
      * @return
@@ -78,12 +76,12 @@ public class CartServiceImpl implements CartService {
 
             //合并
             // 先将临时购物车的数据合并到用户购物车中;
-            mergeCart(tempCartPrefixKey,loginUserCartPrefixKey);
+            mergeCart(tempCartPrefixKey, loginUserCartPrefixKey);
 
-            return getCartVoFromRedis(generateUserKey,loginUserCartPrefixKey);
-        }else {
+            return getCartVoFromRedis(generateUserKey, loginUserCartPrefixKey);
+        } else {
             //add 2 临时
-            return getCartVoFromRedis(generateUserKey,tempCartPrefixKey);
+            return getCartVoFromRedis(generateUserKey, tempCartPrefixKey);
         }
 
 
@@ -91,19 +89,20 @@ public class CartServiceImpl implements CartService {
 
     /**
      * 封装 获取redis的购物车item 数据
+     *
      * @param userkey
      * @param redisHashKey
      * @return
      */
-    private ServerResponse<CartVo> getCartVoFromRedis(String userkey,String redisHashKey){
+    private ServerResponse<CartVo> getCartVoFromRedis(String userkey, String redisHashKey) {
 
 
         RMap<String, String> cartItemMap = redissonClient.getMap(redisHashKey);
         Collection<String> cartItemValues = cartItemMap.values();
         CartVo cartVo = new CartVo();
         cartVo.setUserKey(userkey);
-        if (CollectionUtils.isEmpty(cartItemValues)){
-            return ServerResponse.createBySuccess("购物车现在是空的，请去添加商品吧",cartVo);
+        if (CollectionUtils.isEmpty(cartItemValues)) {
+            return ServerResponse.createBySuccess("购物车现在是空的，请去添加商品吧", cartVo);
         }
 
         ArrayList<CartItemVo> cartItemVoList = Lists.newArrayList();
@@ -114,12 +113,13 @@ public class CartServiceImpl implements CartService {
         cartVo.setItems(cartItemVoList);
 
 
-        return  ServerResponse.createBySuccess("获取购物车数据成功",cartVo);
+        return ServerResponse.createBySuccess("获取购物车数据成功", cartVo);
     }
 
 
     /**
      * 添加商品到购物车
+     *
      * @param skuId
      * @param num
      * @param userKey
@@ -149,14 +149,14 @@ public class CartServiceImpl implements CartService {
             loginUserCartPrefixKey = Constant.CartInfo.CART_PREFIX + memberId;
             //合并
             // 先将临时购物车的数据合并到用户购物车中;
-            mergeCart(tempCartPrefixKey,loginUserCartPrefixKey);
+            mergeCart(tempCartPrefixKey, loginUserCartPrefixKey);
 
             cartItemVo = saveCartItemToRedisCart(loginUserCartPrefixKey, skuId, num);
 
 
         } else {
             //add 2 临时
-            cartItemVo = saveCartItemToRedisCart(tempCartPrefixKey,skuId,num);
+            cartItemVo = saveCartItemToRedisCart(tempCartPrefixKey, skuId, num);
         }
 
         //登录购物车 添加商品不能返回 用户的id作为key，因为前端如果以为是临时key，以后带上作为临时购物车，那me会覆盖用户购物车的列表
@@ -174,6 +174,7 @@ public class CartServiceImpl implements CartService {
 
     /**
      * 更新购物车数量
+     *
      * @param skuId
      * @param num
      * @param userKey
@@ -182,7 +183,7 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public CartVo updateCart(Long skuId, Integer num, String userKey, String authorization) {
-        Map<String,String> map = getCartKey(userKey, authorization);
+        Map<String, String> map = getCartKey(userKey, authorization);
 
         RMap<String, String> cart = redissonClient.getMap(map.get("cartKey"));
         String itemJson = cart.get(skuId.toString());
@@ -200,6 +201,7 @@ public class CartServiceImpl implements CartService {
 
     /**
      * 选中/ 不选中购物车
+     *
      * @param skuId
      * @param status
      * @param userKey
@@ -208,7 +210,7 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public CartVo checkCart(Long[] skuId, Integer status, String userKey, String authorization) {
-        Map<String,String> map = getCartKey(userKey, authorization);
+        Map<String, String> map = getCartKey(userKey, authorization);
         RMap<String, String> cart = redissonClient.getMap(map.get("cartKey"));
 
         if (skuId != null && skuId.length > 0) {
@@ -227,13 +229,55 @@ public class CartServiceImpl implements CartService {
         return cartVo;
     }
 
+    @Override
+    public CartVo getCartForOrder(Long id) {
+        //1、登录购物车
+        RMap<String, String> cart = redissonClient.getMap(Constant.CartInfo.CART_PREFIX + id);
+
+        List<CartItemVo> cartItemVos = new ArrayList<>();
+
+        Collection<String> values = cart.values();
+        if (values != null && values.size() > 0) {
+            for (String value : values) {
+                if (!org.springframework.util.StringUtils.isEmpty(value)) {
+                    //转化为购物项
+                    CartItemVo itemVo = JSON.parseObject(value, CartItemVo.class);
+                    if (itemVo.isCheck()) {
+                        cartItemVos.add(itemVo);
+                    }
+                }
+            }
+        }
+
+        //准备一个新的对象返回
+        CartVo cartVo = new CartVo();
+        cartVo.setItems(cartItemVos);
+
+
+        return cartVo;
+    }
+
+    @Override
+    public void clearSkuIds(ClearCartSkuVo skuVo) {
+        List<Long> skuIds = skuVo.getSkuIds();
+        Long userId = skuVo.getUserId();
+
+        RMap<String, String> cart = redissonClient.getMap(Constant.CartInfo.CART_PREFIX + userId);
+
+
+        skuIds.forEach((skuId) -> {
+            cart.remove(skuId.toString());
+        });
+    }
+
 
     /**
      * 有前缀的
+     *
      * @return
      */
-    private Map<String,String> getCartKey(String userKey,String authorization){
-        Map<String,String> map =  new HashMap<>();
+    private Map<String, String> getCartKey(String userKey, String authorization) {
+        Map<String, String> map = new HashMap<>();
 
         String loginUserCartPrefixKey;
         //1、获取userkey的前缀
@@ -251,20 +295,20 @@ public class CartServiceImpl implements CartService {
 
             cartKey = loginUserCartPrefixKey;
 
-        }else {
+        } else {
             //add 2 临时
-            cartKey= tempCartPrefixKey;
+            cartKey = tempCartPrefixKey;
         }
 
-        map.put("cartKey",cartKey);
-        map.put("userKey",generateUserKey);
+        map.put("cartKey", cartKey);
+        map.put("userKey", generateUserKey);
 
         return map;
     }
 
     private String buildTempCartKey(String userKey) {
         String tempCartPrefixKey;
-        if (!StringUtils.isBlank(userKey)){
+        if (!StringUtils.isBlank(userKey)) {
             tempCartPrefixKey = Constant.CartInfo.CART_PREFIX + userKey;
         } else {
             tempCartPrefixKey = Constant.CartInfo.CART_PREFIX + UUID.randomUUID().toString().replace("-", "");
@@ -274,13 +318,13 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    private CartItemVo saveCartItemToRedisCart(String hashPrefixKey,Long skuId,Integer num) throws ExecutionException, InterruptedException {
+    private CartItemVo saveCartItemToRedisCart(String hashPrefixKey, Long skuId, Integer num) throws ExecutionException, InterruptedException {
         RMap<String, Object> map = redissonClient.getMap(hashPrefixKey);
         String skuStr = (String) map.get(skuId.toString());
-        CartItemVo cartItemVo ;
+        CartItemVo cartItemVo;
 
         //2、添加购物车之前先确定购物车中有没有这个商品，如果有就数量+1 如果没有新增
-        if (StringUtils.isBlank(skuStr)){
+        if (StringUtils.isBlank(skuStr)) {
             //从远程查看skuId对应的sku相关信息，并封装到cartItem中，存储到redis
             //todo 从远程查看skuId对应的sku相关信息
             //能给线程池提交任务，但是completebleFuture更加强大，任务的异常都能感知
@@ -297,15 +341,15 @@ public class CartServiceImpl implements CartService {
                 }
                 SkuInfoVo skuInfoVo = skuInfoResponse.getData();
                 //2、购物项
-                BeanUtils.copyProperties(skuInfoVo,tempCartItemVo);
+                BeanUtils.copyProperties(skuInfoVo, tempCartItemVo);
                 tempCartItemVo.setNum(num);
 
             }, executor);
 
-            infoAsync.whenCompleteAsync((v,e)->{
+            infoAsync.whenCompleteAsync((v, e) -> {
                 // todo 怎么让它异常直接整个异步编排退出
-                log.error("action行为是",v);
-                log.error("异步编排出错",e);
+                log.error("action行为是", v);
+                log.error("异步编排出错", e);
             });
 
             //2）、封装了优惠券信息
@@ -340,15 +384,15 @@ public class CartServiceImpl implements CartService {
                 }
             }, executor);
 
-            CompletableFuture.allOf(infoAsync,couponAsync,reductionAsync).get();
+            CompletableFuture.allOf(infoAsync, couponAsync, reductionAsync).get();
             //4、保存购物车数据
 
-            map.put(skuId.toString(),JsonUtil.obj2Json(tempCartItemVo));
+            map.put(skuId.toString(), JsonUtil.obj2Json(tempCartItemVo));
             cartItemVo = tempCartItemVo;
         } else {
             cartItemVo = JsonUtil.Json2Obj(skuStr, CartItemVo.class);
-            cartItemVo.setNum(cartItemVo.getNum()+num);
-            map.put(skuId.toString(),JsonUtil.obj2Json(cartItemVo));
+            cartItemVo.setNum(cartItemVo.getNum() + num);
+            map.put(skuId.toString(), JsonUtil.obj2Json(cartItemVo));
 
         }
         //
@@ -360,15 +404,16 @@ public class CartServiceImpl implements CartService {
     /**
      * 合并临时购物车到 用户购物车，反正如果登录不携带userKey还是会给你一个，
      * 老师的是，直接登录查看不会给userKey， 如果第一次临时查看，什么都没有，userKey也没有，那肯定直接返回空， 再给你一个userKey
-     *              添加功能 不会给你userKey的
+     * 添加功能 不会给你userKey的
+     *
      * @param
      * @return
      */
-    private void mergeCart(String tempCartKey,String loginUserCartKey) throws ExecutionException, InterruptedException {
+    private void mergeCart(String tempCartKey, String loginUserCartKey) throws ExecutionException, InterruptedException {
 //        redisTemplate.opsForHash().delete();
         RMap<String, String> tempCartItemsOfCartMap = redissonClient.getMap(tempCartKey);
         Collection<String> values = tempCartItemsOfCartMap.values();
-        if (!CollectionUtils.isEmpty(values)){
+        if (!CollectionUtils.isEmpty(values)) {
             for (String value : values) {
                 CartItemVo cartItemVo = JsonUtil.Json2Obj(value, CartItemVo.class);
                 //将临时购物车里面的这个购物项添加到在线购物车里面
