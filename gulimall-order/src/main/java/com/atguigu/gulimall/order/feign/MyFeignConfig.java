@@ -32,7 +32,8 @@ public class MyFeignConfig {
 
 
 //        1. 通过获取前一个controller请求的所有请求头信息，拦截，然后全部设置在请的远程请求的请求信息里面
-//  注意：因为RequestContextHolder用的ThreadLocal同步请求2. 同步可以获取同一个线程请求的请求信息，但是订单确认请求方法是异步线程【远程调用】，所以获取不到不同的线程的请求信息
+//  注意：因为RequestContextHolder用的ThreadLocal同步请求
+//  2. 同步可以获取同一个线程请求的请求信息，但是订单确认请求方法是异步线程【远程调用】，所以获取不到不同的线程的请求信息
         return new RequestInterceptor() {
             @Override
             /**
@@ -43,7 +44,7 @@ public class MyFeignConfig {
                 //拿到原生请求，
                 //RequestContextHolder利用经典写法
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                //这是原来controller过来的请求
+                //这是原来controller过来的请求, RequestTemplate是新的feign请求
                 HttpServletRequest request = attributes.getRequest();
                 String authorization = request.getHeader("Authorization");
                 System.out.println("拦截器获取到的内容...."+authorization);
