@@ -158,6 +158,8 @@ public class OrderServiceImpl implements OrderService {
          *        }
          *      >
          */
+        //令牌防重复提交脚本  原子验令牌删锁
+        //1000个请求进来只能有1个成功
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
         //RedisScript<T> script, List<K> keys, Object... args
 //        Integer execute = redisTemplate.execute(new DefaultRedisScript<>(script,Integer.class), Arrays.asList(Constant.TOKENS + orderToken), orderToken);
@@ -168,25 +170,27 @@ public class OrderServiceImpl implements OrderService {
             if (execute == 1) {
                 //redis里面有令牌，并且验证通过，删除了，
                 //1、验库存\锁库存。(具有原子性，防止刚验库存有东西，等锁又没了)
-                //1.1）、获取到我们想要买的所有东西（从购物车中直接获取）
+                //1.1）、获取到我们想要买的所有东西（从购物车中直接获取） / 供1.2 验证 封装要的参数
+                //同步： 购物车商品数量验证通过才能进行下一步
                 Resp<CartVo> itemsAndStatics = cartFeignService.getCartCheckItemsAndStatics();
 
                 CartVo cartVo = itemsAndStatics.getData();
                 List<CartItemVo> items = cartVo.getItems();
-                List<SkuLockVo> skuIds = new ArrayList<>();//准备将所有需要验库存的商品id发过去
+                List<SkuLockVo> skuLockVoList = new ArrayList<>();//准备将所有需要验库存的商品id发过去
 
                 items.forEach((itemVo) -> {
                     SkuLockVo skuLockVo = new SkuLockVo();
                     skuLockVo.setSkuId(itemVo.getSkuId());
                     skuLockVo.setNum(itemVo.getNum());
                     skuLockVo.setOrderToken(orderToken);
-                    skuIds.add(skuLockVo);
+                    skuLockVoList.add(skuLockVo);
                 });
 
-                //1.2）、验库存同时锁库存；
+                //1.2）、验库存同时锁库存；通过wms微服务完成【核心，电商极大可能会出现超卖】
+                //那边微服务的锁库存需要用分布式锁，避免同时进来抢占【1. 判断库存是否有>，2. 同时进行数据库更新操作 3. 同时锁库存成功,超卖】，造成超卖
                 Resp<LockStockVo> resp = null;
                 try{
-                    resp = wareHourseFeignService.lockAndCheckStock(skuIds);
+                    resp = wareHourseFeignService.lockAndCheckStock(skuLockVoList);
                 }catch (Exception e){
                     Resp<Object> fail = Resp.fail(null);
                     fail.setCode(BizCode.SERVICE_UNAVAILABLE.getCode());
@@ -198,7 +202,7 @@ public class OrderServiceImpl implements OrderService {
                 System.out.println("返回的数据..." + resp.getData());
                 if (resp.getData().getLocked() == true) {
                     //库存全部锁住
-                    //2、验价。前端提交的价和购物车选中的价进行对比，如果一样才可以；
+                    //2、验价。【前端提交的价和购物车选中（商品）的价】进行对比，如果一样才可以；
                     BigDecimal totalPrice = vo.getTotalPrice();
                     //最新查询到的购物车的价格信息；
                     Resp<CartVo> cartVoResp = cartFeignService.getCartCheckItemsAndStatics();

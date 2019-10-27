@@ -7,6 +7,8 @@ public class Constant {
 
     public static  final String TOKENS = "guli:tokens:";
     public static  final Long TOKENS_TIMEOUT = 30L; //以分钟为单位
+
+    public static final String STOCK_LOCKED = "stock:lock:";//+商品id，标识某个商品的库存锁；
     public interface CategoryInfo{
         String REDIS_CACHE_PREFIX="cache:category";
 

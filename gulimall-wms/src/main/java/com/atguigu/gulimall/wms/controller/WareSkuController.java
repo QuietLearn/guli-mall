@@ -3,10 +3,13 @@ package com.atguigu.gulimall.wms.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 import com.atguigu.gulimall.commons.bean.*;
 import com.atguigu.gulimall.commons.to.wms.SkuStockVo;
+import com.atguigu.gulimall.wms.vo.LockStockVo;
+import com.atguigu.gulimall.wms.vo.SkuLockVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +38,14 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    @ApiOperation("验库存&锁库存")
+    @PostMapping("/checkAndLock")
+    public Resp<LockStockVo> lockAndCheckStock(@RequestBody List<SkuLockVo> skuIds) throws ExecutionException, InterruptedException {
+
+        LockStockVo lockStockVo = wareSkuService.lockAndCheckStock(skuIds);
+
+        return Resp.ok(lockStockVo);
+    }
 
 
     @PostMapping("/skus/stock")

@@ -13,5 +13,21 @@
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
 
+    <!--    Long checkStock(SkuLockVo skuId);-->
+    <select id="checkStock" resultType="long">
+        SELECT SUM(stock-stock_locked) FROM `wms_ware_sku`
+            WHERE sku_id=#{skuId}
+    </select>
+
+    <!--    List<WareSkuEntity> getAllWareCanLocked(SkuLockVo skuId);-->
+    <select id="getAllWareCanLocked" resultMap="wareSkuMap">
+        SELECT * FROM wms_ware_sku WHERE sku_id=#{skuId} AND
+        stock-stock_locked >= #{num}
+    </select>
+    <!--     long lockSku(@Param("sku") SkuLockVo skuId, @Param("wareId") Long id);-->
+    <update id="lockSku">
+     UPDATE `wms_ware_sku` SET stock_locked=stock_locked+#{sku.num}
+        WHERE sku_id=#{sku.skuId} AND ware_id=#{wareId}
+    </update>
 
 </mapper>
