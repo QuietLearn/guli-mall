@@ -17,7 +17,7 @@
 <!--        <mybatisplus.version>3.0.7.1</mybatisplus.version>-->
 <!--        5.1.47 插入时间  不正确-->
 <!--        <mysql.version>5.1.46</mysql.version>-->
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <swagger.version>2.9.2</swagger.version>
         <joda-time.version>2.10.2</joda-time.version>
         <redis-version>2.1.7.RELEASE</redis-version>
